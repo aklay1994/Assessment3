@@ -36,6 +36,7 @@ def daysInMonth(month, year,):
         return 30
     elif month == 2:
         if (year % 4 == 0 and year % 100 != 0) or (year % 400 == 0):
+            print("This is a leap year, therefore 28 days in Feb.")
             return 29
         else:
             return 28
