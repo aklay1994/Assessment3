@@ -4,19 +4,23 @@ def add_record():
 
 
     #Ask for Date and validate the date.
-    is_valid_date()
+    date_input = input(print("What is the date Format (DD/MM/YYYY): "))
+    is_valid_date(date_input)
 
     #Ask for start and end time and validate
-    is_valid_time()
+    start_time_input = input("What is the start-time (8-21): ")
+    end_time_input = input("What is the end-time(8-21): ")
+    is_valid_time(start_time_input, end_time_input)
 
 
 
 
 
 
-def is_valid_date():
 
-    date_input = input(print("What is the date Format (DD/MM/YYYY): "))
+
+def is_valid_date(date_input):
+
     day_string, month_string, year_string = date_input.split('/')
 
     year = int(year_string)
@@ -36,6 +40,8 @@ def is_valid_date():
     else:
         print("This is not a valid day")
 
+    is_valid_time()
+
 
 
 def daysInMonth(month, year,):
@@ -53,10 +59,8 @@ def daysInMonth(month, year,):
 
 
 
-def is_valid_time():
+def is_valid_time(start_time_input, end_time_input):
 
-    start_time_input = input("What is the start-time (8-21): ")
-    end_time_input = input("What is the end-time(8-21): ")
 
     if (start_time_input < 8 or start_time_input > 21):
         print("Invalid Start-time.")
@@ -65,6 +69,8 @@ def is_valid_time():
     if(end_time_input < 8 or end_time_input > 21):
         print("Invalid end-time.")
         return False
+
+
 
 
 
