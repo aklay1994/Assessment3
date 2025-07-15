@@ -18,13 +18,18 @@ def is_valid_date():
     month = int(month_string)
     day = int(day_string)
 
+    if (year < 2025 or year > 3000):
+        print("Invalid Year")
+        return False
+
+    if (month <1 or month > 12):
+        print("Invalid Month")
+        return False
+
     if (1<= day <= daysInMonth(month, year)):
         print("This is a valid Day")
     else:
         print("This is not a valid day")
-
-
-
 
 
 
