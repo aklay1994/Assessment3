@@ -2,7 +2,12 @@ appointment_lists = []
 
 def add_record():
 
+
+    #Ask for Date and validate the date.
     is_valid_date()
+
+    #Ask for start and end time and validate
+    is_valid_time()
 
 
 
@@ -46,6 +51,20 @@ def daysInMonth(month, year,):
         else:
             return 28
 
+
+
+def is_valid_time():
+
+    start_time_input = input("What is the start-time (8-21): ")
+    end_time_input = input("What is the end-time(8-21): ")
+
+    if (start_time_input < 8 or start_time_input > 21):
+        print("Invalid Start-time.")
+        return False
+
+    if(end_time_input < 8 or end_time_input > 21):
+        print("Invalid end-time.")
+        return False
 
 
 
