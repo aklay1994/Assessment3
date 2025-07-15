@@ -61,6 +61,13 @@ def daysInMonth(month, year,):
 
 def is_valid_time(start_time_input, end_time_input):
 
+    try:
+        start = int(start_time_input)
+        end = int(end_time_input)
+    except ValueError:
+        print("Error: Use integers for time.")
+        return False
+
 
     if (start_time_input < 8 or start_time_input > 21):
         print("Invalid Start-time.")
@@ -69,6 +76,12 @@ def is_valid_time(start_time_input, end_time_input):
     if(end_time_input < 8 or end_time_input > 21):
         print("Invalid end-time.")
         return False
+
+    if (start >= end):
+        print("Start-time must be before the End-Time.")
+        return False
+
+    return True
 
 
 
