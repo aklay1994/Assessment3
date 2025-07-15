@@ -17,17 +17,22 @@ def is_valid_date():
     year = int(year_string)
     month = int(month_string)
     day = int(day_string)
+
     if (2000 < year < 3000):
         return year
     else:
         print("This is a false year.")
+
 
     if (1 <= month <= 12):
         return month
     else:
         print("This is a false month")
 
-    if (1 <= day <= daysInMonth(month,year)):
+
+    daysinmonth = int(daysInMonth(month, year))
+
+    if (1 <= day <= daysinmonth):
         return day
 
     else:
@@ -48,13 +53,19 @@ def daysInMonth(month, year,):
         if (month == 2):
             return 29
         else:
-            return
-    elif(month == 1,3,5,7,8,10,12):
-        return 31
-    elif(month == 4,6,9,11):
-        return 30
-    elif(month == 2):
-        return 28
+           return print("Only month that changes is feb.")
+
+
+    else:
+        if (month == 1, 3,5, 7, 8, 10 ,12):
+            print("There are 31 days in this month")
+            return 31
+        elif(month == 4,6,9,11):
+            print("There are 30 days in this month")
+            return 30
+
+
+
 
 
 def main():
