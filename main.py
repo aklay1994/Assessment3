@@ -12,6 +12,11 @@ def add_record():
     end_time_input = input("What is the end-time(8-21): ")
     is_valid_time(start_time_input, end_time_input)
 
+    is_concurrent_appointment(start_time_input, end_time_input)
+
+    subject_input = input(print("What is your Subject?"))
+
+
 
 
 
