@@ -21,7 +21,25 @@ def add_record():
 
 def is_valid_date(date_input):
 
-    day_string, month_string, year_string = date_input.split('/')
+    string_parts = date_input.split('/')
+
+    if len(string_parts != 3 ):
+        print("Error, Date must be in format (DD/MM/YYYY)")
+        return False
+
+    day_string, month_string, year_string = string_parts
+
+    if not (day_string and month_string and year_string):
+        print("Error, Day and month and year must be provided")
+        return False
+
+    if not (day_string.isdigit() and month_string.isdigit() and year_string.isdigit()):
+        print("Error. Date parts must be digits")
+        return False
+
+    if (len(day_string) > 1 and day_string[0] == '0') or (len(month_string) > 1 and month_string[0] == '0'):
+        print("Error. Date parts must not lead with zeros")
+        return False
 
     year = int(year_string)
     month = int(month_string)
@@ -85,7 +103,31 @@ def is_valid_time(start_time_input, end_time_input):
 
 
 
+def is_concurrent_appointment(new_user_date, new_user_start,new_user_end):
+    for appointment in appointment_lists:
 
+        time_parts = appointment.split(';')
+        if (len(time_parts) != 4):
+            continue
+
+
+        date, subject, start_string, end_string = time_parts
+
+        try:
+            start = int(start_string)
+            end = int(end_string)
+
+        except ValueError:
+            continue
+
+
+        if date == new_user_date:
+
+            if (new_user_start < end) and (start < new_user_end):
+                print(f"Error: conflicting with existing appointment: {subject} ({start}-{end})")
+                return True
+
+    return False
 
 def main():
 
