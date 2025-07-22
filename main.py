@@ -2,10 +2,32 @@ appointment_lists = []
 
 def add_record():
 
+    global appointment_lists
 
-    #Ask for Date and validate the date.
-    date_input = input(print("What is the date Format (DD/MM/YYYY): "))
-    is_valid_date(date_input)
+    print("Add New Appointment")
+    print("Enter 'EXIT' to stop adding appointments")
+
+    while True:
+
+        date = date_input()
+        if date == "EXIT":
+            break
+
+        subject = subject_input()
+        if subject == "EXIT":
+            break
+
+        start_time = input_start_time()
+        if start_time == "EXIT":
+            break
+
+
+
+
+
+
+
+
 
     #Ask for start and end time and validate
     start_time_input = input("What is the start-time (8-21): ")
@@ -14,7 +36,39 @@ def add_record():
 
     is_concurrent_appointment(start_time_input, end_time_input)
 
-    subject_input = input(print("What is your Subject?"))
+
+
+def date_input():
+    while True:
+        date = input(print("What is the Date (DD/MM/YYYY or EXIT): "))
+        if date.upper() == "EXIT":
+            return "EXIT"
+        if is_valid_date(date):
+            return date
+        print("Invalid Date, Example 13/04/2026")
+
+
+def subject_input():
+    while True:
+        subject = input(print("Subject (Max 32 Characters or EXIT): ")).strip()
+        if subject.upper() == "EXIT":
+            return "EXIT"
+        if (0 < len(subject) <= 32):
+            return subject
+        print("Invalid subject. Must be 1-32 Characters")
+
+
+def input_start_time():
+    while True:
+        time = input(print("What is your starting time (8-21 or EXIT): ")).strip()
+        if time.upper() == "EXIT":
+            return "EXIT"
+        if time.isdigit() and 8 <= int(time) <= 21:
+            return time
+        print("Invalid Starting time. Must be integers from 8-21.")
+
+def input_end_time(start_time):
+    while True:
 
 
 
@@ -23,12 +77,11 @@ def add_record():
 
 
 
-
-def is_valid_date(date_input):
+def is_valid_date(date):
 
     string_parts = date_input.split('/')
 
-    if len(string_parts != 3 ):
+    if len(string_parts != 3):
         print("Error, Date must be in format (DD/MM/YYYY)")
         return False
 
@@ -79,6 +132,7 @@ def daysInMonth(month, year,):
             return 29
         else:
             return 28
+
 
 
 
