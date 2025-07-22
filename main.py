@@ -21,26 +21,29 @@ def add_record():
         if start_time == "EXIT":
             break
 
+        end_time = input_end_time(start_time)
+        if end_time == "EXIT":
+            break
+
+
+        if is_concurrent_appointment(date, start_time, end_time):
+            print("Cannot add overlapping appointments.")
+            continue
+
+        record = f"{date}; {subject};{start_time};{end_time}"
+        appointment_lists.append(record)
+        print(f"Added Appointment {subject} on {date} at {start_time}:00-{end_time}:00")
+
+    show_records()
 
 
 
 
-
-
-
-
-    #Ask for start and end time and validate
-    start_time_input = input("What is the start-time (8-21): ")
-    end_time_input = input("What is the end-time(8-21): ")
-    is_valid_time(start_time_input, end_time_input)
-
-    is_concurrent_appointment(start_time_input, end_time_input)
-
-
+#-------------------------------------Input Methods-----------------------------------------#
 
 def date_input():
     while True:
-        date = input(print("What is the Date (DD/MM/YYYY or EXIT): "))
+        date = input(print("What is the Date (DD/MM/YYYY or EXIT): ")).strip()
         if date.upper() == "EXIT":
             return "EXIT"
         if is_valid_date(date):
@@ -69,9 +72,15 @@ def input_start_time():
 
 def input_end_time(start_time):
     while True:
+        time = input((print("What is your ending time (8-21 or EXIT): "))).strip()
+        if time.upper() == "EXIT":
+            return "EXIT"
+        if (time.isdigit() and int(time) > int(start_time) and int(time) <= 21):
+            return time
+        print(f"End time must be > {start_time} and less of equal than 21.")
 
 
-
+#-------------------------------------------------------------------------------------------#
 
 
 
