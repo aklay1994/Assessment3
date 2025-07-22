@@ -197,6 +197,10 @@ def is_concurrent_appointment(new_user_date, new_user_start,new_user_end):
 
     return False
 
+
+def show_records():
+
+
 def main():
 
 
