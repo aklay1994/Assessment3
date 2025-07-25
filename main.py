@@ -80,7 +80,7 @@ def is_concurrent_appointment(date, start, end):
 
 
 def add_record():
-    print("\mAdd new Appointment")
+    print("\nAdd new Appointment")
 
     while True:
         date = input(print("Enter a date (DD/MM/YYYY or EXIT): ")).strip()
@@ -95,7 +95,18 @@ def add_record():
             print("Subject must be 1-32 characters")
             continue
 
-        start
+        start = input(print("Start Time (8-21): ")).strip()
+        end = input(print("End Time (8-21): ")).strip()
+
+        if not check_time(start, end):
+            continue
+        if is_concurrent_appointment(date, int(start), int(end)):
+            print("Can't add overlapping appointment")
+            continue
+
+        appointment_lists.append(f"{date}; {subject};{start};{end}")
+        print("Appointment Added")
+        break
 
 def show_records():
     print("\nAll Appointments")
