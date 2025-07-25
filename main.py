@@ -1,41 +1,101 @@
 appointment_lists = []
 
+def leap_year(year):
+    if (year % 400 == 0):
+        return True
+    if (year % 100 == 0):
+        return False
+    if (year % 4 == 0):
+        return True
+    return False
+
+
+def check_date(date):
+    try:
+        day, month, year = date.split("/")
+        day = int(day)
+        month = int(month)
+        year = int(year)
+    except:
+        print("Use format DD/MM/YYYY")
+        return False
+
+    if (year <2025 or year > 3000):
+        print("Year must be between 2025 and 2999")
+        return False
+    if (month < 1 or month >12):
+        print("Month must be between 1 and 12")
+        return False
+
+    if month in [4,6,9,11] and day > 30:
+        print("This month only has 30 days")
+        return False
+    elif (month == 2):
+        if leap_year(year) and day > 29:
+            print("February only has 29 day in leap years")
+            return False
+        elif not (leap_year(year) and day > 28):
+            print("February only has 28 days this year")
+            return False
+    elif day > 31:
+        print("This month only has 31 days")
+        return False
+    if day < 1:
+        print("Day must be greater than 1")
+        return False
+
+    return True
+
+def check_time(start, end):
+    try:
+        start = int(start)
+        end = int(end)
+    except:
+        print("Please enter Whole numbers.")
+        return False
+
+    if (start < 8 or end > 21):
+        print("Appointments must be between 8am and 9pm")
+        return False
+
+    if (start >= end):
+        print("End time must be after start time")
+        return False
+    return True
+
+
+
+def is_concurrent_appointment(date, start, end):
+    for app in appointment_lists:
+        app_date, app_subject, app_start, app_end = app.split(";")
+        if (app_date == date):
+            app_start = int(app_start)
+            app_end = int(app_end)
+
+            if not (end <= app_start or start >= app_end):
+                print(f"Overlaps with: {app_subject} ({app_start}-{app_end})")
+                return True
+    return False
+
+
+
 def add_record():
-
-    global appointment_lists
-
-    print("Add New Appointment")
-    print("Enter 'EXIT' to stop adding appointments")
+    print("\mAdd new Appointment")
 
     while True:
-
-        date = date_input()
-        if date == "EXIT":
+        date = input(print("Enter a date (DD/MM/YYYY or EXIT): ")).strip()
+        if date.upper() == "EXIT":
             break
 
-        subject = subject_input()
-        if subject == "EXIT":
-            break
-
-        start_time = input_start_time()
-        if start_time == "EXIT":
-            break
-
-        end_time = input_end_time(start_time)
-        if end_time == "EXIT":
-            break
-
-
-        if is_concurrent_appointment(date, start_time, end_time):
-            print("Cannot add overlapping appointments.")
+        if not check_date(date):
             continue
 
-        record = f"{date}; {subject};{start_time};{end_time}"
-        appointment_lists.append(record)
-        print(f"Added Appointment {subject} on {date} at {start_time}:00-{end_time}:00")
+        subject = input(print("Subject (1-32 Characters): ")).strip()
+        if len(subject) == 0 or len(subject) > 32:
+            print("Subject must be 1-32 characters")
+            continue
 
-    show_records()
-
+        start
 
 def show_records():
     print("\nAll Appointments")
@@ -96,174 +156,7 @@ def sort_records():
         show_records()
 
 
-#-------------------------------------Input Methods-----------------------------------------#
-
-def date_input():
-    while True:
-        date = input(print("What is the Date (DD/MM/YYYY or EXIT): ")).strip()
-        if date.upper() == "EXIT":
-            return "EXIT"
-        if is_valid_date(date):
-            return date
-        print("Invalid Date, Example 13/04/2026")
-
-
-def subject_input():
-    while True:
-        subject = input(print("Subject (Max 32 Characters or EXIT): ")).strip()
-        if subject.upper() == "EXIT":
-            return "EXIT"
-        if (0 < len(subject) <= 32):
-            return subject
-        print("Invalid subject. Must be 1-32 Characters")
-
-
-def input_start_time():
-    while True:
-        time = input(print("What is your starting time (8-21 or EXIT): ")).strip()
-        if time.upper() == "EXIT":
-            return "EXIT"
-        if time.isdigit() and 8 <= int(time) <= 21:
-            return time
-        print("Invalid Starting time. Must be integers from 8-21.")
-
-def input_end_time(start_time):
-    while True:
-        time = input((print("What is your ending time (8-21 or EXIT): "))).strip()
-        if time.upper() == "EXIT":
-            return "EXIT"
-        if (time.isdigit() and int(time) > int(start_time) and int(time) <= 21):
-            return time
-        print(f"End time must be > {start_time} and less of equal than 21.")
-
-
-#-------------------------------------------------------------------------------------------#
-
-
-
-
-
-def is_valid_date(date):
-
-
-
-    if date.count("/") != 2:
-        print("Error, Date must use DD/MM/YYYY format.")
-        return False
-
-    string_parts = date.split('/')
-
-    if len(string_parts) != 3:
-        print("Error, Date must have day, month and year")
-        return False
-
-
-    day_string, month_string, year_string = string_parts
-
-    if not (day_string and month_string and year_string):
-        print("Error, Day and month and year must be provided")
-        return False
-
-    if not (day_string.isdigit() and month_string.isdigit() and year_string.isdigit()):
-        print("Error. Date parts must be digits")
-        return False
-
-    if (len(day_string) > 1 and day_string[0] == '0') or (len(month_string) > 1 and month_string[0] == '0'):
-        print("Error. Date parts must not lead with zeros")
-        return False
-
-    year = int(year_string)
-    month = int(month_string)
-    day = int(day_string)
-
-    if (year < 2025 or year > 3000):
-        print("Invalid Year")
-        return False
-
-    if (month <1 or month > 12):
-        print("Invalid Month")
-        return False
-
-    if (1<= day <= daysInMonth(month, year)):
-        print("This is a valid Day")
-    else:
-        print("This is not a valid day")
-
-
-
-def daysInMonth(month, year,):
-
-    if month in [1,3,5,7,8,10,12]:
-        return 31
-    elif month in [4,6,9,11]:
-        return 30
-    elif month == 2:
-        if (year % 4 == 0 and year % 100 != 0) or (year % 400 == 0):
-            print("This is a leap year, therefore 28 days in Feb.")
-            return 29
-        else:
-            return 28
-
-
-
-
-def is_valid_time(start_time_input, end_time_input):
-
-    try:
-        start = int(start_time_input)
-        end = int(end_time_input)
-    except ValueError:
-        print("Error: Use integers for time.")
-        return False
-
-
-    if (start_time_input < 8 or start_time_input > 21):
-        print("Invalid Start-time.")
-        return False
-
-    if(end_time_input < 8 or end_time_input > 21):
-        print("Invalid end-time.")
-        return False
-
-    if (start >= end):
-        print("Start-time must be before the End-Time.")
-        return False
-
-    return True
-
-
-
-def is_concurrent_appointment(new_user_date, new_user_start,new_user_end):
-    for appointment in appointment_lists:
-
-        time_parts = appointment.split(';')
-        if (len(time_parts) != 4):
-            continue
-
-
-        date, subject, start_string, end_string = time_parts
-
-        try:
-            start = int(start_string)
-            end = int(end_string)
-
-        except ValueError:
-            continue
-
-
-        if date == new_user_date:
-
-            if (new_user_start < end) and (start < new_user_end):
-                print(f"Error: conflicting with existing appointment: {subject} ({start}-{end})")
-                return True
-
-    return False
-
-
-
-
-
-
+#===========================Main Program=============================#
 def main():
 
         print("Simple Program Scheduler")
