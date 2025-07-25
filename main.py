@@ -20,23 +20,25 @@ def check_date(date):
         print("Use format DD/MM/YYYY")
         return False
 
-    if (year <2025 or year > 3000):
+    if year <2025 or year > 3000:
         print("Year must be between 2025 and 2999")
         return False
-    if (month < 1 or month >12):
+    if month < 1 or month >12:
         print("Month must be between 1 and 12")
         return False
 
     if month in [4,6,9,11] and day > 30:
         print("This month only has 30 days")
         return False
-    elif (month == 2):
-        if leap_year(year) and day > 29:
-            print("February only has 29 day in leap years")
-            return False
-        elif not (leap_year(year) and day > 28):
-            print("February only has 28 days this year")
-            return False
+    elif month == 2:
+        if leap_year(year):
+            if day >29:
+                print("February only has 29 day in leap years")
+                return False
+            else:
+                if day> 28:
+                    print("February only has 28 days this year")
+                    return False
     elif day > 31:
         print("This month only has 31 days")
         return False
