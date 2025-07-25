@@ -156,7 +156,7 @@ def sort_records():
         show_records()
 
 
-#===========================Main Program=============================#
+#===========================Main Program============================#
 def main():
 
         print("Simple Program Scheduler")
