@@ -115,8 +115,8 @@ def show_records():
         print("No Appointments Made Yet")
         return
 
-    print("Date           | Subject             | Start | End")
-    print("---------------------------------------------------")
+    print("Date       | Subject              | Start | End")
+    print("----------------------------------------------")
 
     for app in appointment_lists:
         date, subject, start_time, end_time = app.split(";")
@@ -163,8 +163,8 @@ def sort_records():
                                 appointment_lists[j], appointment_lists[j + 1] = appointment_lists[j + 1], appointment_lists[j]
 
 
-        print("Appointments Sorted!!")
-        show_records()
+    print("Appointments Sorted!!")
+    show_records()
 
 
 #===========================Main Program============================#
