@@ -37,6 +37,63 @@ def add_record():
     show_records()
 
 
+def show_records():
+    print("\nAll Appointments")
+
+    if not appointment_lists:
+        print("No Appointments Made Yet")
+        return
+
+    print("Date           | Subject             | Start | End")
+    print("---------------------------------------------------")
+
+    for app in appointment_lists:
+        date, subject, start_time, end_time = app.split(";")
+        print(f"{date:<10} | {subject:<20} | {start_time:>5} | {end_time:>3}")
+
+
+def sort_records():
+    if not appointment_lists:
+        print("No appointments to sort.")
+        return
+
+
+    while True:
+        user_choice = input(print("\nSort Appointments by time? (YES/EXIT): ")).strip().upper()
+        if user_choice == "EXIT":
+            return
+        if user_choice == "YES":
+            break
+        print("Only Enter YES or EXIT.")
+
+        n = len(appointment_lists)
+        for i in range(n):
+            for j in range(0, n-i-1):
+
+                date1 = appointment_lists[j].split(";")[0]
+                date2 = appointment_lists[j+1].split(";")[0]
+                day1, month1, year1 = map(int, date1.split("/"))
+                day2, month2, year2 = map(int, date2.split("/"))
+
+                if (year1 > year2):
+                    appointment_lists[j], appointment_lists[j+1] = appointment_lists[j+1], appointment_lists[j]
+                elif(year1 == year2):
+                    if (month1 > month2):
+                        appointment_lists[j], appointment_lists[j + 1] = appointment_lists[j + 1], appointment_lists[j]
+                    elif (month1 == month2):
+                        if (day1 > day2):
+                            appointment_lists[j], appointment_lists[j + 1] = appointment_lists[j + 1], appointment_lists[j]
+                        elif (day1 == day2):
+
+                            t1 = int(appointment_lists[j].split(";")[2])
+                            t2 = int(appointment_lists[j+1].split(";")[2])
+
+                            if (t1 > t2):
+                                appointment_lists[j], appointment_lists[j + 1] = appointment_lists[j + 1], appointment_lists[j]
+
+
+        print("Appointments Sorted!!")
+        show_records()
 
 
 #-------------------------------------Input Methods-----------------------------------------#
@@ -198,18 +255,34 @@ def is_concurrent_appointment(new_user_date, new_user_start,new_user_end):
     return False
 
 
-def show_records():
+
+
 
 
 def main():
 
+        print("Simple Program Scheduler")
+
+        while True:
+            print("\nMenu")
+            print("1. Add Appointment")
+            print("2. View Appointments")
+            print("3. Sort Appointments")
+            print("4. Quit")
 
 
-    add_record()
+            user_choice = input(print("Enter Your Choice (1-4): "))
 
-
-
-
+            if user_choice == "1":
+                add_record()
+            elif user_choice == "2":
+                show_records()
+            elif user_choice == "3":
+                sort_records()
+            elif user_choice == "4":
+                print("Exiting Program")
+            else:
+                print("Please enter (1-4).")
 
 
 if __name__ == "__main__":
