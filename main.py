@@ -145,11 +145,18 @@ def input_end_time(start_time):
 
 def is_valid_date(date):
 
-    string_parts = date_input.split('/')
 
-    if len(string_parts != 3):
-        print("Error, Date must be in format (DD/MM/YYYY)")
+
+    if date.count("/") != 2:
+        print("Error, Date must use DD/MM/YYYY format.")
         return False
+
+    string_parts = date.split('/')
+
+    if len(string_parts) != 3:
+        print("Error, Date must have day, month and year")
+        return False
+
 
     day_string, month_string, year_string = string_parts
 
@@ -181,8 +188,6 @@ def is_valid_date(date):
         print("This is a valid Day")
     else:
         print("This is not a valid day")
-
-    is_valid_time()
 
 
 
