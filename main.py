@@ -1,16 +1,16 @@
 appointment_lists = []
 
 def leap_year(year):
-    if (year % 400 == 0):
+    if year % 400 == 0:
         return True
-    if (year % 100 == 0):
+    if year % 100 == 0:
         return False
-    if (year % 4 == 0):
+    if year % 4 == 0:
         return True
     return False
 
 
-def check_date(date):
+def is_valid_date(date):
     try:
         day, month, year = date.split("/")
         day = int(day)
@@ -56,11 +56,11 @@ def check_time(start, end):
         print("Please enter Whole numbers.")
         return False
 
-    if (start < 8 or end > 21):
+    if start < 8 or end > 21:
         print("Appointments must be between 8am and 9pm")
         return False
 
-    if (start >= end):
+    if start >= end:
         print("End time must be after start time")
         return False
     return True
@@ -70,7 +70,7 @@ def check_time(start, end):
 def is_concurrent_appointment(date, start, end):
     for app in appointment_lists:
         app_date, app_subject, app_start, app_end = app.split(";")
-        if (app_date == date):
+        if app_date == date:
             app_start = int(app_start)
             app_end = int(app_end)
 
@@ -89,7 +89,7 @@ def add_record():
         if date.upper() == "EXIT":
             break
 
-        if not check_date(date):
+        if not is_valid_date(date):
             continue
 
         subject = input(print("Subject (1-32 Characters): ")).strip()
@@ -139,6 +139,8 @@ def sort_records():
             break
         print("Only Enter YES or EXIT.")
 
+        # Using Bubble Sort https://www.w3schools.com/python/python_dsa_bubblesort.asp #
+
         n = len(appointment_lists)
         for i in range(n):
             for j in range(0, n-i-1):
@@ -148,20 +150,20 @@ def sort_records():
                 day1, month1, year1 = map(int, date1.split("/"))
                 day2, month2, year2 = map(int, date2.split("/"))
 
-                if (year1 > year2):
+                if year1 > year2:
                     appointment_lists[j], appointment_lists[j+1] = appointment_lists[j+1], appointment_lists[j]
-                elif(year1 == year2):
-                    if (month1 > month2):
+                elif year1 == year2:
+                    if month1 > month2:
                         appointment_lists[j], appointment_lists[j + 1] = appointment_lists[j + 1], appointment_lists[j]
-                    elif (month1 == month2):
-                        if (day1 > day2):
+                    elif month1 == month2:
+                        if day1 > day2:
                             appointment_lists[j], appointment_lists[j + 1] = appointment_lists[j + 1], appointment_lists[j]
-                        elif (day1 == day2):
+                        elif day1 == day2:
 
                             t1 = int(appointment_lists[j].split(";")[2])
                             t2 = int(appointment_lists[j+1].split(";")[2])
 
-                            if (t1 > t2):
+                            if t1 > t2:
                                 appointment_lists[j], appointment_lists[j + 1] = appointment_lists[j + 1], appointment_lists[j]
 
 
