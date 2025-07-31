@@ -1,6 +1,7 @@
 appointment_lists = []
 
 def leap_year(year):
+    """Using the Modulo operator to validate the leap year process."""
     if year % 400 == 0:
         return True
     if year % 100 == 0:
@@ -11,6 +12,8 @@ def leap_year(year):
 
 
 def is_valid_date(date):
+    """Splitting the date variable up into three separate pieces and converting them into ints, then validating the date
+    variables to check if their valid"""
     try:
         day, month, year = date.split("/")
         day = int(day)
@@ -49,6 +52,7 @@ def is_valid_date(date):
     return True
 
 def check_time(start, end):
+    """This function checks and validates the start and end time and also that the end time is after the start time."""
     try:
         start = int(start)
         end = int(end)
@@ -60,7 +64,7 @@ def check_time(start, end):
         print("Appointments must be between 8am and 9pm")
         return False
 
-    if start >= end:
+    if end >= start:
         print("End time must be after start time")
         return False
     return True
@@ -68,6 +72,8 @@ def check_time(start, end):
 
 
 def is_concurrent_appointment(date, start, end):
+    """This function checks if there are concurrent appointments, using a for loop and checking if the appointment date is
+    the same as the date, then checking whether the times are overlapping."""
     for app in appointment_lists:
         app_date, app_subject, app_start, app_end = app.split(";")
         if app_date == date:
@@ -82,6 +88,9 @@ def is_concurrent_appointment(date, start, end):
 
 
 def add_record():
+    """The add_record function is where the user adds a record and this function will use a lot of different validation
+    functions."""
+
     print("\nAdd new Appointment")
 
     while True:
@@ -111,6 +120,7 @@ def add_record():
         break
 
 def show_records():
+    """Using different string functions to format and show the records."""
     print("\nAll Appointments")
 
     if not appointment_lists:
@@ -126,6 +136,8 @@ def show_records():
 
 
 def sort_records():
+    """This function was the hardest to do, i figured that the bubble sort was the easiest to implement and sort through
+    our appointment list. I used various online sources to learn and implement the bubblesort."""
     if not appointment_lists:
         print("No appointments to sort.")
         return
@@ -173,6 +185,7 @@ def sort_records():
 
 #===========================Main Program============================#
 def main():
+
 
         print("Simple Program Scheduler")
 
